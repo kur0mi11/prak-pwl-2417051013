@@ -27,5 +27,7 @@ class MataKuliahController extends Controller
         'nama_mk' => $request->input('nama_mk'),
         'sks' => $request->input('sks'),
         ]);
+
+        return redirect()->to('/matakuliah');
     }
 }
