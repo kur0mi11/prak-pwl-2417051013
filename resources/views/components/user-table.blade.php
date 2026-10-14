@@ -8,13 +8,12 @@
                 <th>Nama</th>
                 <th>NPM</th>
                 <th>Kelas</th>
+                <th>Aksi</th>
             </tr>
         </thead>
 
         <tbody>
-
             @forelse ($users as $user)
-
                 <tr>
                     <td>{{ $user->id }}</td>
 
@@ -22,30 +21,47 @@
                         {{ $user->nama }}
                     </td>
 
-                    <td>
-                        {{ $user->npm }}
-                    </td>
+                    <td>{{ $user->npm }}</td>
 
                     <td>
                         <span class="badge text-bg-secondary">
                             {{ $user->nama_kelas }}
                         </span>
                     </td>
-                </tr>
 
-            @empty
+                    <td>
+                        <div class="d-flex gap-2">
 
-                <tr>
-                    <td colspan="4"
-                        class="text-center text-secondary py-4">
+                            <a href="{{ route('user.edit', $user->id) }}"
+                               class="btn btn-sm btn-outline-primary">
+                                Edit
+                            </a>
 
-                        Belum ada data pengguna.
+                            <form action="{{ route('user.destroy', $user->id) }}"
+                                  method="POST"
+                                  onsubmit="return confirm('Yakin ingin menghapus pengguna ini?')">
 
+                                @csrf
+                                @method('DELETE')
+
+                                <button type="submit"
+                                        class="btn btn-sm btn-outline-danger">
+                                    Hapus
+                                </button>
+                            </form>
+
+                        </div>
                     </td>
                 </tr>
 
+            @empty
+                <tr>
+                    <td colspan="5"
+                        class="text-center text-secondary py-4">
+                        Belum ada data pengguna.
+                    </td>
+                </tr>
             @endforelse
-
         </tbody>
 
     </table>
